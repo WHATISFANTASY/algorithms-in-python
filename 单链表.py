@@ -3,16 +3,27 @@
 
 
 class LNode:
+    """
+    结点类
+    """
+
     def __init__(self, elem, next_=None):
         self.elem = elem
         self.next = next_
 
 
 class LinkedListUnderflow(ValueError):
+    """
+    自定义异常
+    """
     pass
 
 
 class LList:
+    """
+    链表类
+    """
+
     def __init__(self):
         self._head = None
 
