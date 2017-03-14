@@ -37,9 +37,9 @@ class LList:
         self._head = self._head.next
         return self._head.elem
 
-    # 在表头插入数据
+    # 在表头插入元素
     def prepend(self, elem):
-        self._head = LNode(elem)
+        self._head = LNode(elem, self._head)
 
     # 在链表最后插入元素
     def append(self, elem):
@@ -52,7 +52,7 @@ class LList:
         while p.next is not None:
             p = p.next
         p.next = LNode(elem)
-        # 如果不为空，则先从头遍历链表，找到最后的结点，然后把最后结点的next指向需要插入的元素即可。实际上是在操作next域
+        # 如果不为空，则先从头扫描链表，找到最后的结点，然后把最后结点的next指向需要插入的元素即可。实际上是在操作next域
 
     # 删除最后一个结点
     def pop_last(self):
@@ -69,9 +69,22 @@ class LList:
             p = p.next
         p.next = None
         return p.next.elem
-        # 如果表长大于1,则从头遍历，找到倒数第二个结点，把倒数第二个结点的next域置空，并返回最后一个结点
+        # 如果表长大于1,则从头扫描，找到倒数第二个结点，把倒数第二个结点的next域置空，并返回最后一个结点
 
-    def printall(self):
+    def printall(self):  # 扫描打印链表的每个元素
         p = self._head
         while p is not None:
             print(p.elem, end='')
+            if p.next is not None:
+                print(',', end='')
+            p = p.next
+
+
+# 链表的使用
+mlist1 = LList()
+for i in range(10):
+    mlist1.prepend(i)
+
+for i in range(11, 20):
+    mlist1.append(i)
+mlist1.printall()
