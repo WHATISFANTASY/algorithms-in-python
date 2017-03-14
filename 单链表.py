@@ -79,12 +79,19 @@ class LList:
                 print(',', end='')
             p = p.next
 
+    def elements(self):  # 写一个生成器，使链表支持for操作
+        p = self._head
+        while p is not None:
+            yield p.elem
+            p = p.next
+
 
 # 链表的使用
 mlist1 = LList()
 for i in range(10):
     mlist1.prepend(i)
-
 for i in range(11, 20):
     mlist1.append(i)
-mlist1.printall()
+
+for x in mlist1.elements():
+    print(x)
