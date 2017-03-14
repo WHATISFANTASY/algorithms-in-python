@@ -34,8 +34,9 @@ class LList:
     def pop(self):
         if self._head is None:
             raise LinkedListUnderflow("in pop")
+        e = self._head.elem
         self._head = self._head.next
-        return self._head.elem
+        return e
 
     # 在表头插入元素
     def prepend(self, elem):
@@ -58,17 +59,16 @@ class LList:
     def pop_last(self):
         if self._head is None:  # 空表
             raise LinkedListUnderflow("in pop_last")
-
         p = self._head
-
         if p.next is None:  # 如果表长为1，则清空之，并返回原来的元素
+            e = p.elem
             self._head = None
-            return p.elem
-
+            return e
         while p.next.next is not None:
             p = p.next
+        e = p.next.elem
         p.next = None
-        return p.next.elem
+        return e
         # 如果表长大于1,则从头扫描，找到倒数第二个结点，把倒数第二个结点的next域置空，并返回最后一个结点
 
     def printall(self):  # 扫描打印链表的每个元素
@@ -84,6 +84,41 @@ class LList:
         while p is not None:
             yield p.elem
             p = p.next
+
+
+class LList1(LList):  # 派生一个变形单链表类
+    def __init__(self):
+        LList.__init__(self)
+        self._rear = None
+
+    def prepend(self, elem):  # 重构prepend方法
+        if self._rear is None:
+            self._head = LNode(elem, self._head)
+            self._rear = self._head
+        else:
+            self._head = LNode(elem, self._head)
+
+    def append(self, elem):
+        if self._head is None:
+            self._head = LNode(elem, self._head)
+            self._rear = self._head
+        else:
+            self._rear.next = LNode(elem)
+            self._rear = self._rear.next
+
+    def pop_last(self):
+        if self._head is None:
+            raise LinkedListUnderflow("in pop_last")
+        p = self._head
+        if p.next is None:
+            self._head = None
+            return p.elem
+        while p.next.next is not None:
+            p = p.next
+        e = p.next.elem
+        p.next = None
+        self._rear = p
+        return e
 
 
 # 链表的使用
